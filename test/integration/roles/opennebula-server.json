@@ -1,0 +1,227 @@
+{
+  "name": "opennebula-server",
+  "default_attributes": {
+    "opennebula": {
+      "version": "5.2",
+      "config": {
+        "oned.conf": {
+          "LOG": {
+            "SYSTEM": "false",
+            "DEBUG_LEVEL": "3"
+          },
+          "MONITORING_INTERVAL": "60",
+          "MONITORING_THREADS": "50",
+          "SCRIPTS_REMOTE_DIR": "/var/tmp/one",
+          "PORT": "2633",
+          "LISTEN_ADDRESS": "0.0.0.0",
+          "DB": {
+            "BACKEND": "sqlite"
+          },
+          "VNC_PORTS": {
+            "START": "5900"
+          },
+          "FEDERATION": {
+            "MODE": "STANDALONE",
+            "ZONE_ID": "0",
+            "MASTER_ONED": ""
+          },
+          "DEFAULT_COST": {
+            "CPU_COST": "0",
+            "MEMORY_COST": "0",
+            "DISK_COST": "0"
+          },
+          "NETWORK_SIZE": "254",
+          "MAC_PREFIX": "02:00",
+          "VLAN_IDS": {
+            "START": "2",
+            "RESERVED": "0, 1, 4095"
+          },
+          "VXLAN_IDS": {
+            "START": "2"
+          },
+          "DATASTORE_CAPACITY_CHECK": "yes",
+          "DEFAULT_IMAGE_TYPE": "OS",
+          "DEFAULT_DEVICE_PREFIX": "hd",
+          "DEFAULT_CDROM_DEVICE_PREFIX": "hd",
+          "IM_MAD": [
+            {
+              "NAME": "collectd",
+              "EXECUTABLE": "collectd",
+              "ARGUMENTS": "-p 4124 -f 5 -t 50 -i 20"
+            },
+            {
+              "NAME": "kvm",
+              "SUNSTONE_NAME": "KVM",
+              "EXECUTABLE": "one_im_ssh",
+              "ARGUMENTS": "-r 3 -t 15 kvm"
+            }
+          ],
+          "VM_MAD": [
+            {
+              "NAME": "kvm",
+              "SUNSTONE_NAME": "KVM",
+              "EXECUTABLE": "one_vmm_exec",
+              "ARGUMENTS": "-t 15 -r 0 kvm",
+              "DEFAULT": "vmm_exec/vmm_exec_kvm.conf",
+              "TYPE": "kvm",
+              "KEEP_SNAPSHOTS": "no",
+              "IMPORTED_VMS_ACTIONS": "terminate, terminate-hard, hold, release, suspend, resume, delete, reboot, reboot-hard, resched, unresched, disk-attach, disk-detach, nic-attach, nic-detach, snap-create, snap-delete"
+            }
+          ],
+          "TM_MAD": [
+            {
+              "EXECUTABLE": "one_tm",
+              "ARGUMENTS": "-t 15 -d dummy,lvm,shared,fs_lvm,qcow2,ssh,ceph,dev,vcenter,iscsi_libvirt"
+            }
+          ],
+          "DATASTORE_MAD": [
+            {
+              "EXECUTABLE": "one_datastore",
+              "ARGUMENTS": "-t 15 -d dummy,fs,lvm,ceph,dev,iscsi_libvirt,vcenter -s shared,ssh,ceph,fs_lvm,qcow2"
+            }
+          ],
+          "MARKET_MAD": [
+            {
+              "EXECUTABLE": "one_market",
+              "ARGUMENTS": "-t 15 -m http,s3,one"
+            }
+          ],
+          "IPAM_MAD": [
+            {
+              "EXECUTABLE": "one_ipam",
+              "ARGUMENTS": "-t 1 -i dummy"
+            }
+          ],
+          "HM_MAD": [
+            {
+              "EXECUTABLE": "one_hm"
+            }
+          ],
+          "AUTH_MAD": [
+            {
+              "EXECUTABLE": "one_auth_mad",
+              "AUTHN": "ssh,x509,ldap,server_cipher,server_x509"
+            }
+          ],
+          "SESSION_EXPIRATION_TIME": "900",
+          "DEFAULT_UMASK": "177",
+          "VM_RESTRICTED_ATTR": [
+            "CONTEXT/FILES",
+            "NIC/MAC",
+            "NIC/VLAN_ID",
+            "NIC/BRIDGE",
+            "NIC/INBOUND_AVG_BW",
+            "NIC/INBOUND_PEAK_BW",
+            "NIC/INBOUND_PEAK_KB",
+            "NIC/OUTBOUND_AVG_BW",
+            "NIC/OUTBOUND_PEAK_BW",
+            "NIC/OUTBOUND_PEAK_KB",
+            "NIC_DEFAULT/MAC",
+            "NIC_DEFAULT/VLAN_ID",
+            "NIC_DEFAULT/BRIDGE",
+            "DISK/TOTAL_BYTES_SEC",
+            "DISK/READ_BYTES_SEC",
+            "DISK/WRITE_BYTES_SEC",
+            "DISK/TOTAL_IOPS_SEC",
+            "DISK/READ_IOPS_SEC",
+            "DISK/WRITE_IOPS_SEC",
+            "DISK/ORIGINAL_SIZE",
+            "CPU_COST",
+            "MEMORY_COST",
+            "DISK_COST",
+            "PCI",
+            "EMULATOR",
+            "USER_INPUTS/CPU",
+            "USER_INPUTS/MEMORY",
+            "USER_INPUTS/VCPU"
+          ],
+          "IMAGE_RESTRICTED_ATTR": [
+            "SOURCE"
+          ],
+          "VNET_RESTRICTED_ATTR": [
+            "VN_MAD",
+            "PHYDEV",
+            "VLAN_ID",
+            "BRIDGE",
+            "AR/VN_MAD",
+            "AR/PHYDEV",
+            "AR/VLAN_ID",
+            "AR/BRIDGE"
+          ],
+          "INHERIT_DATASTORE_ATTR": [
+            "CEPH_HOST",
+            "CEPH_SECRET",
+            "CEPH_USER",
+            "CEPH_CONF",
+            "POOL_NAME",
+            "ISCSI_USER",
+            "ISCSI_USAGE",
+            "ISCSI_HOST",
+            "GLUSTER_HOST",
+            "GLUSTER_VOLUME",
+            "DISK_TYPE",
+            "ADAPTER_TYPE"
+          ],
+          "INHERIT_IMAGE_ATTR": [
+            "ISCSI_USER",
+            "ISCSI_USAGE",
+            "ISCSI_HOST",
+            "ISCSI_IQN",
+            "DISK_TYPE",
+            "ADAPTER_TYPE"
+          ],
+          "INHERIT_VNET_ATTR": [
+            "VLAN_TAGGED_ID",
+            "FILTER_IP_SPOOFING",
+            "FILTER_MAC_SPOOFING",
+            "MTU",
+            "INBOUND_AVG_BW",
+            "INBOUND_PEAK_BW",
+            "INBOUND_PEAK_KB",
+            "OUTBOUND_AVG_BW",
+            "OUTBOUND_PEAK_BW",
+            "OUTBOUND_PEAK_KB"
+          ],
+          "TM_MAD_CONF": [
+            {"NAME": "dummy", "LN_TARGET": "NONE", "CLONE_TARGET": "SYSTEM", "SHARED": "YES","DS_MIGRATE": "YES"},
+            {"NAME": "lvm", "LN_TARGET": "NONE", "CLONE_TARGET": "SELF", "SHARED": "YES"},
+            {"NAME": "shared", "LN_TARGET": "NONE", "CLONE_TARGET": "SYSTEM", "SHARED": "YES", "DS_MIGRATE": "YES"},
+            {"NAME": "fs_lvm", "LN_TARGET": "SYSTEM", "CLONE_TARGET": "SYSTEM", "SHARED": "YES"},
+            {"NAME": "qcow2", "LN_TARGET": "NONE", "CLONE_TARGET": "SYSTEM", "SHARED": "YES"},
+            {"NAME": "ssh", "LN_TARGET": "SYSTEM", "CLONE_TARGET": "SYSTEM", "SHARED": "NO", "DS_MIGRATE": "YES"},
+            {"NAME": "ceph", "LN_TARGET": "NONE", "CLONE_TARGET": "SELF", "SHARED": "YES", "DS_MIGRATE": "NO"},
+            {"NAME": "iscsi_libvirt", "LN_TARGET": "NONE", "CLONE_TARGET": "SELF", "SHARED": "YES", "DS_MIGRATE": "NO"},
+            {"NAME": "dev", "LN_TARGET": "NONE", "CLONE_TARGET": "NONE", "SHARED": "YES"},
+            {"NAME": "vcenter", "LN_TARGET": "NONE", "CLONE_TARGET": "NONE", "SHARED": "YES"}
+          ],
+          "DS_MAD_CONF": [
+            {"NAME": "ceph", "REQUIRED_ATTRS": "DISK_TYPE,BRIDGE_LIST", "PERSISTENT_ONLY": "NO", "MARKETPLACE_ACTIONS": "export"},
+            {"NAME": "dev", "REQUIRED_ATTRS": "DISK_TYPE", "PERSISTENT_ONLY": "YES"},
+            {"NAME": "iscsi_libvirt", "REQUIRED_ATTRS": "DISK_TYPE,ISCSI_HOST", "PERSISTENT_ONLY": "YES"},
+            {"NAME": "dummy", "REQUIRED_ATTRS": "", "PERSISTENT_ONLY": "NO"},
+            {"NAME": "fs", "REQUIRED_ATTRS": "", "PERSISTENT_ONLY": "NO", "MARKETPLACE_ACTIONS": "export"},
+            {"NAME": "lvm", "REQUIRED_ATTRS": "DISK_TYPE,BRIDGE_LIST", "PERSISTENT_ONLY": "NO"},
+            {"NAME": "vcenter", "REQUIRED_ATTRS": "VCENTER_CLUSTER", "PERSISTENT_ONLY": "YES", "MARKETPLACE_ACTIONS": "export"}
+          ],
+          "MARKET_MAD_CONF": [
+            {"NAME": "one", "SUNSTONE_NAME": "OpenNebula.org Marketplace", "REQUIRED_ATTRS": "", "APP_ACTIONS": "monitor", "PUBLIC": "yes"},
+            {"NAME": "http", "SUNSTONE_NAME": "HTTP server", "REQUIRED_ATTRS": "BASE_URL,PUBLIC_DIR", "APP_ACTIONS": "create, delete, monitor"},
+            {"NAME": "s3", "SUNSTONE_NAME": "Amazon S3", "REQUIRED_ATTRS": "ACCESS_KEY_ID,SECRET_ACCESS_KEY,REGION,BUCKET", "APP_ACTIONS": "create, delete, monitor"}
+          ],
+          "AUTH_MAD_CONF": [
+            {"NAME": "core", "PASSWORD_CHANGE": "YES", "DRIVER_MANAGED_GROUPS": "NO", "MAX_TOKEN_TIME": "-1"},
+            {"NAME": "public","PASSWORD_CHANGE": "NO","DRIVER_MANAGED_GROUPS": "NO","MAX_TOKEN_TIME": "-1"},
+            {"NAME": "ssh", "PASSWORD_CHANGE": "YES", "DRIVER_MANAGED_GROUPS": "NO", "MAX_TOKEN_TIME": "-1"},
+            {"NAME": "x509", "PASSWORD_CHANGE": "NO", "DRIVER_MANAGED_GROUPS": "NO", "MAX_TOKEN_TIME": "-1"},
+            {"NAME": "ldap", "PASSWORD_CHANGE": "YES", "DRIVER_MANAGED_GROUPS": "YES", "MAX_TOKEN_TIME": "86400"},
+            {"NAME": "server_cipher", "PASSWORD_CHANGE": "NO", "DRIVER_MANAGED_GROUPS": "NO", "MAX_TOKEN_TIME": "-1"},
+            {"NAME": "server_x509", "PASSWORD_CHANGE": "NO", "DRIVER_MANAGED_GROUPS": "NO", "MAX_TOKEN_TIME": "-1"}
+          ]
+        }
+      }
+    }
+  },
+  "run_list": [
+    "recipe[opennebula::daemon]"
+  ]
+}

@@ -1,0 +1,28 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: ubuntu-14.04
+  - name: ubuntu-16.04
+
+suites:
+  - name: opennebula-node
+    run_list:
+      - role[opennebula-node]
+    attributes: {}
+  - name: opennebula-sunstone
+    run_list:
+      - role[opennebula-sunstone]
+    attributes: {}
+  - name: opennebula-server
+    run_list:
+      - role[opennebula-server]
+    attributes: {}
+  - name: opennebula-empty
+    run_list:
+      - recipe[opennebula::daemon]
+    attributes: {}
