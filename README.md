@@ -56,9 +56,6 @@ The recipe is included in several other recipes and will not be needed directly 
 #### opennebula::daemon
 Will install the Opennebula daemon (oned and scheduler) package.
 
-#### opennebula::configure
-
-Configures Opennebula based on the attributes set for each config file under ```['opennebula']['config']```
 **Be aware that you have to set all options you want to appear in that file.** See the roles file under ```test/integration/roles/opennebula-server.json ``` as example
 
 #### opennebula::dependencies
